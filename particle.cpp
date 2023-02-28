@@ -9,7 +9,7 @@
 using Gorgon::Geometry::Point;
 using Gorgon::Physics::Particle;
 
-void Particle::integrator(double time)
+void Particle::Integrator(double time)
 {
     // don't integrate particles with zero mass
     if (inverseMass <= 0.0f)
@@ -45,16 +45,16 @@ void Particle::integrator(double time)
     velocity *= pow(damping, time);
 
     // clear the accumulated forces
-    clearAccumulator();
+    ClearAccumulator();
 };
 
-void Particle::setMass(const double mass)
+void Particle::SetMass(const double value)
 {
-    assert(mass != 0);
-    Particle::inverseMass = (1.0f / mass);
+    assert(value != 0);
+    inverseMass = (1.0f / value);
 };
 
-double Particle::getMass() const
+double Particle::GetMass() const
 {   
     // if the inverse mass is zero, that means it has infinite mass
     if(inverseMass == 0)
@@ -67,75 +67,73 @@ double Particle::getMass() const
     }
 };
 
-void Particle::setInverseMass(const double inverseMass)
+void Particle::SetInverseMass(const double value)
 {
-    Particle::inverseMass = inverseMass;
+    inverseMass = value;
 };
 
-double Particle::getInverseMass() const
+double Particle::GetInverseMass() const
 {
-    return Particle::inverseMass;
+    return this->inverseMass;
 };
 
-void Particle::setDamping(const double damping)
+void Particle::SetDamping(const double value)
 {
-    Particle::damping = damping;
+    damping = value;
 };
 
-double Particle::getDamping() const
+double Particle::GetDamping() const
 {
-    return Particle::damping;
+    return this->damping;
 };
 
-bool Particle::hasFiniteMass() const
+bool Particle::HasFiniteMass() const
 {
-    return inverseMass >= 0.0f;
+    return (inverseMass >= 0.0f);
 };
 
-// TODO --> setPosition using x, y parameters
-void Particle::setPosition(const Point &position)
+void Particle::SetPosition(const Point &value)
 {
-    Particle::position.X = position.X;
-    Particle::position.Y = position.Y;
-    //Particle::position.Z = position.Z;
+    this->position = value;
 };
 
-// TODO --> getPosition that return a pointer to the position
-Point Particle::getPosition() const 
+void Particle::SetPosition(const int &x, const int &y)
 {
-    return Particle::position;
+    this->position.X = x;
+    this->position.Y = y;
+}
+
+Point Particle::GetPosition() const 
+{
+    return this->position;
 };
 
-void Particle::setVelocity(const Point &velocity)
+void Particle::SetVelocity(const Point &value)
 {
-    Particle::velocity.X = velocity.X;
-    Particle::velocity.Y = velocity.Y;
-    //Particle::velocity.Z = velocity.Z;
+    this->velocity = value;
 };
 
-// TODO --> getPosition that return a pointer to the velocity
-Point Particle::getVelocity() const 
+Point Particle::GetVelocity() const 
 {
-    return Particle::velocity;
+    return this->velocity;
 };
 
-void Particle::setAcceleration(const Point &acceleration)
+void Particle::SetAcceleration(const Point &value)
 {
-    Particle::acceleration = acceleration;
+    acceleration = value;
 };
 
-// TODO --> getAcceleration that return a pointer to the acceleration
-Point Particle::getAcceleration() const
+Point Particle::GetAcceleration() const
 {
-    return Particle::acceleration;
+    return this->acceleration;
 };
 
-void Particle::clearAccumulator()
+void Particle::ClearAccumulator()
 {
     forceAccum.X = forceAccum.Y = 0;
 };
 
-void Particle::addForce(const Point &force)
+void Particle::AddForce(const Point &force)
 {
     forceAccum += force;
-};
+}; 

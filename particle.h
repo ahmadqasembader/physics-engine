@@ -16,8 +16,7 @@
 
 #include <Gorgon/Geometry/Point.h>
 #include <Gorgon/Geometry/Point3D.h>
-using Gorgon::Geometry::Point;
-using Gorgon::Geometry::Point3D;
+
 
 namespace Gorgon
 {
@@ -43,29 +42,30 @@ namespace Gorgon
              * the acceleration and then update the position
              * with the velocity
              */
-            void integrator(double time);
+            void Integrator(double time);
 
-            void setMass(const double mass);
-            double getMass() const;
+            inline void SetMass(const double mass);
+            inline double GetMass() const;
 
-            void setInverseMass(const double inverseMass);
-            double getInverseMass() const;
+            inline void SetInverseMass(const double inverseMass);
+            inline double GetInverseMass() const;
 
-            void setDamping(const double damping);
-            double getDamping() const;
+            inline void SetDamping(const double damping);
+            inline double GetDamping() const;
 
-            void setPosition(const Point &position);
-            Point getPosition() const;
+            inline void SetPosition(const Point &position);
+            inline void SetPosition(const int &x, const int &y);
+            inline Point GetPosition() const;
 
-            void setVelocity(const Point &velocity);
-            Point getVelocity() const;
+            inline void SetVelocity(const Point &velocity);
+            inline Point GetVelocity() const;
 
-            void setAcceleration(const Point &acceleration);
-            Point getAcceleration() const;
+            inline void SetAcceleration(const Point &acceleration);
+            inline Point GetAcceleration() const;
 
-            void clearAccumulator();
-            void addForce(const Point &force);
-            bool hasFiniteMass() const;
+            inline void ClearAccumulator();
+            inline void AddForce(const Point &force);
+            inline bool HasFiniteMass() const;
         };
     }
 }
