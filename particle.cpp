@@ -28,8 +28,7 @@ void Particle::Integrator(double time)
      */
 
     /// TODO create a function to add a scaled vector directly, ex addScaledVector(vecotr, scale)
-    position += velocity * time; 
-    
+    position += velocity * time;
 
     // work out the acceleratino from the applied force
     Point resultingAcceleration = acceleration;
@@ -55,9 +54,9 @@ void Particle::SetMass(const double value)
 };
 
 double Particle::GetMass() const
-{   
+{
     // if the inverse mass is zero, that means it has infinite mass
-    if(inverseMass == 0)
+    if (inverseMass == 0)
     {
         return std::numeric_limits<double>::max();
     }
@@ -103,7 +102,7 @@ void Particle::SetPosition(const int &x, const int &y)
     this->position.Y = y;
 }
 
-Point Particle::GetPosition() const 
+Point Particle::GetPosition() const
 {
     return this->position;
 };
@@ -113,7 +112,7 @@ void Particle::SetVelocity(const Point &value)
     this->velocity = value;
 };
 
-Point Particle::GetVelocity() const 
+Point Particle::GetVelocity() const
 {
     return this->velocity;
 };
@@ -136,4 +135,4 @@ void Particle::ClearAccumulator()
 void Particle::AddForce(const Point &force)
 {
     forceAccum += force;
-}; 
+};

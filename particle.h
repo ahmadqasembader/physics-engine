@@ -1,6 +1,6 @@
 /**
  * @file particle.h contains Particle class
- * @author Ahmad Bader (ahmadqasem.b@google.com)
+ * @author Ahmad Bader (ahmadqasem.b@gmail.com)
  *
  *
  * @brief This class defines what is a particle
@@ -13,10 +13,10 @@
  * @copyright Copyright (c) 2023
  *
  */
+#pragma once
 
 #include <Gorgon/Geometry/Point.h>
 #include <Gorgon/Geometry/Point3D.h>
-
 
 namespace Gorgon
 {
@@ -32,6 +32,12 @@ namespace Gorgon
             Point velocity;
             Point acceleration;
             Point position;
+
+            /**
+             * this variable holds the accumulated force that to
+             * be applied in the next frame update.
+             * it's also cleared by each frame.
+             */
             Point forceAccum;
 
         public:
