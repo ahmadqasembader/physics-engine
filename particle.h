@@ -31,7 +31,6 @@ namespace Gorgon
             Point position;
             Point velocity;
             Point acceleration;
-            Point position;
 
             /**
              * this variable holds the accumulated force that to
