@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-03-05T15:23:03.382Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="u1IhJh89nzjGB_nFPGjT" version="20.8.20" type="github">
+<mxfile host="app.diagrams.net" modified="2023-03-05T15:53:18.479Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="2GueAFQ9E0m789vGALrF" version="20.8.20" type="github">
   <diagram name="Page-1" id="6ThXWku0QWVdUMpwx_tj">
-    <mxGraphModel dx="991" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1416" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -17,7 +17,7 @@
           <mxGeometry y="138" width="220" height="272" as="geometry" />
         </mxCell>
         <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-1" value="ParticleForceGenerator" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
-          <mxGeometry x="400" y="50" width="220" height="60" as="geometry" />
+          <mxGeometry x="400" y="250" width="220" height="60" as="geometry" />
         </mxCell>
         <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="9R1_WpEXS0TKQR_Ws0Bm-1">
           <mxGeometry y="26" width="220" height="8" as="geometry" />
@@ -25,12 +25,70 @@
         <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-4" value="+ UpdateForce(Particle, time): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="9R1_WpEXS0TKQR_Ws0Bm-1">
           <mxGeometry y="34" width="220" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-5" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=-0.014;entryY=-0.123;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="9R1_WpEXS0TKQR_Ws0Bm-4">
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-5" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="9R1_WpEXS0TKQR_Ws0Bm-1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="260" y="160" as="sourcePoint" />
-            <mxPoint x="400" y="160" as="targetPoint" />
+            <mxPoint x="390" y="80" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="330" y="80" />
+              <mxPoint x="320" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1.005;exitY=1.013;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="9R1_WpEXS0TKQR_Ws0Bm-9" target="9R1_WpEXS0TKQR_Ws0Bm-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="630" y="210" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="671" y="202" />
+              <mxPoint x="670" y="202" />
+              <mxPoint x="670" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-6" value="ParticleForeceRegistry" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="40" width="270" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-7" value="# ParticleRegistration: struct&#xa;# Registry: typedef&#xa;# registrations: Registry" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="9R1_WpEXS0TKQR_Ws0Bm-6">
+          <mxGeometry y="26" width="270" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-8" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="9R1_WpEXS0TKQR_Ws0Bm-6">
+          <mxGeometry y="90" width="270" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-9" value="+ Add(Particle,   ParticleForceGenerator) void&#xa;+ UpdateForce(double) void&#xa;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="9R1_WpEXS0TKQR_Ws0Bm-6">
+          <mxGeometry y="98" width="270" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-10" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=-0.002;entryY=0.194;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="9R1_WpEXS0TKQR_Ws0Bm-7">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="260" y="160" as="sourcePoint" />
+            <mxPoint x="400" y="180" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="320" y="80" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-13" value="&lt;b&gt;It uses ParticeForceGenerator as &lt;br&gt;part of its implementation&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="420" width="210" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-15" value="&lt;b&gt;An interface for all Force Generators&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="400" y="220" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-16" value="Gravity Generator" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="1">
+          <mxGeometry x="410" y="400" width="230" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-17" value="- gravity: Point" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="9R1_WpEXS0TKQR_Ws0Bm-16">
+          <mxGeometry y="26" width="230" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-18" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" vertex="1" parent="9R1_WpEXS0TKQR_Ws0Bm-16">
+          <mxGeometry y="52" width="230" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-19" value="+ GravityGenerator(Point): constructor&#xa;+ UpdateForce(Particle, double): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="9R1_WpEXS0TKQR_Ws0Bm-16">
+          <mxGeometry y="60" width="230" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="9R1_WpEXS0TKQR_Ws0Bm-23" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0.546;entryY=1.015;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.476;exitY=-0.012;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="9R1_WpEXS0TKQR_Ws0Bm-16" target="9R1_WpEXS0TKQR_Ws0Bm-4">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="410" y="392" as="sourcePoint" />
+            <mxPoint x="549" y="310" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="520" y="362" />
             </Array>
           </mxGeometry>
         </mxCell>
