@@ -1,1 +1,22 @@
-<mxfile host="app.diagrams.net" modified="2023-03-05T14:18:27.867Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="tnGEfcziie7v47cbwBia" version="20.8.20" type="github"><diagram name="Page-1" id="6ThXWku0QWVdUMpwx_tj">7VZdb5swFP01SNtDJz6SKH1MSNdVaqes2TTt0YUbsGp8kXFK0l+/a2xCCE2XTuvbJIR8j4/NvfccA14UF9trxcr8DlMQXuinWy9aeGF4eRnQ3QA7C4ynYwtkiqcWCjpgxZ/Bgb5DNzyFqkfUiELzsg8mKCUkuocxpbDu09Yo+k8tWQYDYJUwMUR/8lTnFp2O/Q7/AjzL2ycHvpspWEt2QJWzFOsDKLryolghajsqtjEI07u2L3bd5xOz+8QUSH3OgpsrefF1Jhbix3X9S9Xf8nv/5sLt8sTExhW8ZErzhMq3Setd24mq5oVgkqL5GqVeuZmAYiZ4JmmcUCqgCHgCswkTMzehsSQ0yblIb9kONybhSrPksY3mOSr+TNsy4fakaaWdH8JJj7EyKwn2CVVQEWfZdiE4gu7Ytke8ZZV2QIJCsLLiD/syCqYyLueoNRaO5NpD5cD2ZN+DvZp0CgAL0GpHFLcgGjkDuBMQTlxcd34KWiw/8FIYjpyPnYez/d6dzDRwSr9B9XCguhdGZpGkSiu4YxU9cWZOLW5Me6j/YRTYfhheyoqSy+xVTokV1xylJS2RU7eOOU8gMOF69xqHJQkIUOz1veLQm/kDy5JourGSwkeIUSB5cyHRepgLcQS1Nhaw1idNXJUsodpvG85i1CH3TjkDIa1di+a05zxNQRoDomaaWbeZtEtTRqPseE4XZR/7n8bemBKPKQ66mC5DVzpGSbUw3hgPyMo1GDuf59LT539o3b1Vz3NqMHkvp0YvOPVIZMEb8azI7Ts6+CuFC9JKQCfpd6P44iIYyB4NZY9ekFiwBxDL/UFYKMs9kv5P6vbty2UOir+n6sHlmS+o6TuJPnpB9Ln5pILOMf2gdyV8tK8CM/x/6v+5/tMzP1CTNxuAwu6Pp5k7+G2Mrn4D</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2023-03-05T14:28:05.795Z" agent="5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" etag="34XSjNplubt9vJSorrR1" version="20.8.20" type="github">
+  <diagram name="Page-1" id="6ThXWku0QWVdUMpwx_tj">
+    <mxGraphModel dx="991" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="IEn-NAlDlUGwYrwQhR0I-1" value="Particle" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
+          <mxGeometry x="80" y="40" width="220" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="IEn-NAlDlUGwYrwQhR0I-2" value="# inverseMass: double&#xa;# damping: double&#xa;# position: Point&#xa;# velocity: Point&#xa;# acceleration: Point&#xa;# forceAcum: Point" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="IEn-NAlDlUGwYrwQhR0I-1" vertex="1">
+          <mxGeometry y="26" width="220" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="IEn-NAlDlUGwYrwQhR0I-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="IEn-NAlDlUGwYrwQhR0I-1" vertex="1">
+          <mxGeometry y="130" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="IEn-NAlDlUGwYrwQhR0I-4" value="+ Integrator(double): void&#xa;+ SetMass(double): void&#xa;+ GetMass(): const double&#xa;+ SetInverseMass(double): void&#xa;+ GetInverseMass(): const double&#xa;+ SetDamping(double): void&#xa;+ GetDamping(): const double&#xa;+ SetPosition(Point): void&#xa;+ SetPosition(int, int): void&#xa;+ GetPosition() const Point&#xa;+ SetVelocity(Point): void&#xa;+ GetVelocity() const Point&#xa;+ SetAcc(Point): void&#xa;+ GetAcc(): const Point&#xa;+ ClearAccumulator(): void&#xa;+ AddForce(Point): void&#xa;+ HasFiniateMass(): bool const" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="IEn-NAlDlUGwYrwQhR0I-1" vertex="1">
+          <mxGeometry y="138" width="220" height="272" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
