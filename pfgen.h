@@ -42,6 +42,21 @@ namespace Gorgon
         };
 
         /**
+         * A force generator that applies gravity on the 
+         * supplied particle 
+         */
+        class GravityGenerator : public ParticleForceGenerator
+        {
+            Point gravity;
+        public: 
+            // It creates a gravity generator with the given gravity
+            GravityGenerator(const Point &gravity);
+
+            virtual void UpdateForce(Particle *particle, double time);
+        };
+
+
+        /**
          * Holds all the force generators and the particles they apply to.
          */
         class ParticleForceRegistry

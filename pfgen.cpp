@@ -9,6 +9,11 @@ using Gorgon::Geometry::Point;
 using Gorgon::Physics::Particle;
 using Gorgon::Physics::ParticleForceGenerator;
 using Gorgon::Physics::ParticleForceRegistry;
+using Gorgon::Physics::GravityGenerator;
+
+/********************************************************************
+ * Particle Force Registry Class Implementation
+/********************************************************************/
 
 void ParticleForceRegistry::Add(Particle * particle, ParticleForceGenerator *fg)
 {
@@ -28,4 +33,23 @@ void ParticleForceRegistry::UpdateForces(double time)
     {   
         itr->fg->UpdateForce(itr->particle, time);
     }
+}
+
+
+/********************************************************************
+ * Gravity Force Generator Class Implementation
+/********************************************************************/
+
+GravityGenerator::GravityGenerator(const Point &gravity)
+: gravity(gravity)
+{
+}
+
+void GravityGenerator::UpdateForce(Particle *particle, double time)
+{
+    //don't generate gravity if the particle is massless or has infinite mass
+    if(particle->HasFiniteMass()) return;
+
+    // apply the mass-scaled force on the particle
+    particle->AddForce(gravity * particle->GetMass());
 }
