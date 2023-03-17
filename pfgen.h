@@ -56,6 +56,59 @@ namespace Gorgon
         };
 
 
+        class SpringGenerator : public ParticleForceGenerator
+        {
+            Particle other;
+
+            double spring_constant;
+
+            double rest_length;
+
+        public:
+            SpringGenerator(Particle &particle, double spring_constant, double rest_length);
+
+            virtual void UpdateForce(Particle *particle, double time);
+        };
+
+        class SpringAnchorGenerator : public ParticleForceGenerator
+        {
+            Point anchor;
+
+            double spring_constant;
+
+            double rest_length;
+
+        public: 
+            SpringAnchorGenerator();
+
+            SpringAnchorGenerator(Point &anchor, double spring_constant, double rest_length);
+
+            const Point GetAnchor() const {return anchor;}
+
+            void init(Point &anchor, double spring_constant, double rest_length);
+
+            virtual void UpdateForce(Particle *Particle, double time);
+        };
+
+
+             
+        class BungeeGenerator : public ParticleForceGenerator
+        {
+            
+            Particle other;
+
+            double springConstant;
+
+            double restLength;
+
+        public:
+
+            BungeeGenerator(Particle &other,
+                double springConstant, double restLength);
+
+            virtual void UpdateForce(Particle *particle, double duration);
+        };
+
         /**
          * Holds all the force generators and the particles they apply to.
          */

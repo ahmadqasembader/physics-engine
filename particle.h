@@ -47,7 +47,7 @@ namespace Gorgon
              * the acceleration and then update the position
              * with the velocity
              */
-            void Integrator(double time);
+            void Integrator(unsigned long time);
 
             inline void SetMass(const double mass);
             inline double GetMass() const;
@@ -71,6 +71,6 @@ namespace Gorgon
             inline void ClearAccumulator();
             inline void AddForce(const Point &force);
             inline bool HasFiniteMass() const;
-        };
+        };  
     }
 }

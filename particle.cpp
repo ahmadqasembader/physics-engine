@@ -9,7 +9,7 @@
 using Gorgon::Geometry::Point;
 using Gorgon::Physics::Particle;
 
-void Particle::Integrator(double time)
+void Particle::Integrator(unsigned long time)
 {
     // don't integrate particles with zero mass
     if (inverseMass <= 0.0f)
