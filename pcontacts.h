@@ -24,6 +24,9 @@ namespace Gorgon
 
                 // Holds the direction of the contact 
                 Gorgon::Geometry::Point ContactNormal;
+
+                // Holds the depth of the penetration
+                double penetration;
             
             protected:
                 // A central function resolve contacts and interpenetration
@@ -35,6 +38,8 @@ namespace Gorgon
             private:
                 // Calculates the impulse for this contact
                 void ResolveVelocity(unsigned long time);
+
+                void ResolveInterPenetration(unsigned long time);
         };
     }
 }

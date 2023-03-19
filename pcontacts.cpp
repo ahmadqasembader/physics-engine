@@ -12,6 +12,7 @@ using Gorgon::Physics::ParticleContact;
 void ParticleContact::Resolve(unsigned long time)
 {
     ResolveVelocity(time);
+    ResolveInterPenetration(time);
 }
 
 double ParticleContact::CalcSepVel() const
@@ -83,4 +84,27 @@ void ParticleContact::ResolveVelocity(unsigned long time)
         // The 2nd particle goes into the opposite direction 
         particle[1].SetVelocity(particle[1].GetVelocity() + impulsePerMass * -particle[1].GetInverseMass());
     }
+}
+
+void ParticleContact::ResolveInterPenetration(unsigned long time)
+{
+    // If there's no penetration, exit;
+    if (penetration <= 0) return;
+
+    // The movement of the objects are in propertion with their mass    
+    double totalInverseMass = particle[0].GetInverseMass();
+    if(&particle[1]) 
+        totalInverseMass += particle[1].GetInverseMass();
+
+    // If the objects that are colliding have infinite masses, we do nothing
+    if(totalInverseMass <= 0) return;
+
+    // Find the amount of penetration per unit of inverse mass
+    Point movePerIMass = ContactNormal * (-penetration / totalInverseMass);
+
+    // Apply the penetration
+    particle[0].SetPosition(particle[0].GetPosition() + movePerIMass * particle[0].GetInverseMass());
+    if(&particle[1])
+        particle[1].SetPosition(particle[1].GetPosition() + movePerIMass * particle[1].GetInverseMass());
+
 }
