@@ -54,6 +54,24 @@ void ParticleContact::ResolveVelocity(unsigned long time)
      */
     double newSepVel = -sepVel * restitution;
 
+    // Check the velocity build-up due to acceleration only.
+    Point accCausedVelocity = particle[0].GetAcceleration();
+    if(&particle[1])
+        accCausedVelocity -= particle[1].GetAcceleration();
+
+    double accCausedSepVelocity = accCausedVelocity * ContactNormal * time;
+
+    // If we've got a closing velocity due to acceleration build-up,
+    // remove it from the new separating velocity
+    if (accCausedSepVelocity < 0)
+    {
+        newSepVel += restitution * accCausedSepVelocity;
+
+        // Make sure we haven't removed more than was
+        // there to remove.
+        if (newSepVel < 0) newSepVel = 0;
+    }
+
     // Remember, an impulse is the total change in the velocity
     double deltaVelocity = newSepVel - sepVel;
 
