@@ -7,7 +7,7 @@
 using Gorgon::Geometry::Point;
 using Gorgon::Physics::Particle;
 using Gorgon::Physics::ParticleContact;
-
+using Gorgon::Physics::ParticleContactResolver;
 
 void ParticleContact::Resolve(unsigned long time)
 {
@@ -125,4 +125,45 @@ void ParticleContact::ResolveInterPenetration(unsigned long time)
     if(&particle[1])
         particle[1].SetPosition(particle[1].GetPosition() + movePerIMass * particle[1].GetInverseMass());
 
+}
+
+
+ParticleContactResolver::ParticleContactResolver(unsigned iterations)
+: iterations(iterations)  {};
+
+void ParticleContactResolver::SetIterations(unsigned iterations)
+{
+    this->iterations = iterations;
+}
+
+void ParticleContactResolver::ResolveContacts(ParticleContact *contactArr, unsigned numOfContacts, double time)
+{
+    unsigned i;
+    iterationsUsed = 0;
+
+    while (iterationsUsed < iterations)
+    {
+        //Find the contact with the largest seperating velocity
+        double max = std::numeric_limits<double>::max();
+
+        unsigned maxIndex = numOfContacts;
+
+        for (i = 0; i < numOfContacts; i++)
+        {
+            double sepVel = contactArr[i].CalcSepVel();
+
+            if(sepVel < max)
+            {
+                max = sepVel;
+                maxIndex = i;
+            }
+        }
+
+        // Resolve this contact
+        contactArr[maxIndex].Resolve(time);
+
+        iterations++;
+        
+    }
+    
 }
