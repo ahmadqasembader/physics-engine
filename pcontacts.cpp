@@ -32,6 +32,22 @@ double ParticleContact::CalcSepVel() const
 
 void ParticleContact::ResolveVelocity(unsigned long time)
 {
+
+    /**
+     * The goal in this function is to calculate and apply the 
+     * magintude of the impulse in the direction of the contact normal.
+     * 
+     * To achieve that, we use the following equation:
+     *      
+     *                 -(1+restitution) * (RelativeVelocity * contactNormal)
+     *      Impulse =  ------------------------------------------------------
+     *                                  totalInverseMass
+     * 
+     *  We'll apply this equation in steps.
+     *
+    */  
+
+
     /**
      * Get the seperating velocity before collision
      * Here we are using the seperating velocity instead of 
@@ -54,25 +70,30 @@ void ParticleContact::ResolveVelocity(unsigned long time)
      */
     double newSepVel = -sepVel * restitution;
 
-    // Check the velocity build-up due to acceleration only.
-    Point accCausedVelocity = particle[0].GetAcceleration();
-    if(&particle[1])
-        accCausedVelocity -= particle[1].GetAcceleration();
+            // Check the velocity build-up due to acceleration only.
+            Point accCausedVelocity = particle[0].GetAcceleration();
+            if(&particle[1])
+                accCausedVelocity -= particle[1].GetAcceleration();
 
-    double accCausedSepVelocity = accCausedVelocity * ContactNormal * time;
+            double accCausedSepVelocity = accCausedVelocity * ContactNormal * time;
 
-    // If we've got a closing velocity due to acceleration build-up,
-    // remove it from the new separating velocity
-    if (accCausedSepVelocity < 0)
-    {
-        newSepVel += restitution * accCausedSepVelocity;
+            // If we've got a closing velocity due to acceleration build-up,
+            // remove it from the new separating velocity
+            if (accCausedSepVelocity < 0)
+            {
+                newSepVel += restitution * accCausedSepVelocity;
 
-        // Make sure we haven't removed more than was
-        // there to remove.
-        if (newSepVel < 0) newSepVel = 0;
-    }
+                // Make sure we haven't removed more than was
+                // there to remove.
+                if (newSepVel < 0) newSepVel = 0;
+            }
 
-    // Remember, an impulse is the total change in the velocity
+    /**
+     * Remember, an impulse is the total change in the velocity, 
+     * therefore, we calculate the new relative velocity.
+     * The new relative velocity is the delta velocity (pre and post collision)
+     * */ 
+
     double deltaVelocity = newSepVel - sepVel;
 
     /**
@@ -88,18 +109,32 @@ void ParticleContact::ResolveVelocity(unsigned long time)
     // Impulse have no effects if the objects have infinite masses
     if(totalInverseMass <= 0) return;
 
-    // Calculate the impulse
+    // The magintude of the impulse
     double impulse = deltaVelocity / totalInverseMass;
+ 
+    /*
+     * Find the amount of impulse per unit of inverse mass.
+     * Remember: impulse at essence is a velocity, however, it is
+     * a scaler quantity, that's why we calculate the contact normal seperatly.
+     */
 
-    // Find the amount of impulses per unit of inverse mass
     Point impulsePerMass = ContactNormal * impulse;
 
-    // Apply the all impulses
+    /**
+     * Apply the all impulses. They're applied in the 
+     * direction of the contact normal and the impulses are 
+     * proportional to the inverse mass.
+     * 
+     * We use the following equation: 
+     *          NewVelocity = OldVelocity + InverseMass * TotalImpulses
+     */
+
     particle[0].SetVelocity(particle[0].GetVelocity() + impulsePerMass * particle[0].GetInverseMass());
 
     if(&particle[1])
     {
-        // The 2nd particle goes into the opposite direction 
+        // The 2nd particle goes into the opposite direction,
+        // hence the nigative sign to the inverse mass
         particle[1].SetVelocity(particle[1].GetVelocity() + impulsePerMass * -particle[1].GetInverseMass());
     }
 }
