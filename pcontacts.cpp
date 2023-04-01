@@ -19,7 +19,7 @@ double ParticleContact::CalcSepVel() const
 {
     /**
      * We can calculate the seperating velocity using the
-     * equation: Vs = (velocity_A - velocity_B) * contactNormal(the direction)
+     * equation: Vs = (velocity_A - velocity_B) * contactNormal
      */
     Point relativeVelocity = particle[0].GetVelocity();
 
@@ -27,6 +27,7 @@ double ParticleContact::CalcSepVel() const
     if(&particle[1])
         relativeVelocity -= particle[1].GetVelocity();
 
+    //return the seperating velocity along the contact normal
     return (relativeVelocity * ContactNormal);
 }
 
@@ -37,22 +38,23 @@ void ParticleContact::ResolveVelocity(unsigned long time)
      * The goal in this function is to calculate and apply the 
      * magintude of the impulse in the direction of the contact normal.
      * 
-     * To achieve that, we use the following equation:
-     *      
-     *                 -(1+restitution) * (RelativeVelocity * contactNormal)
-     *      Impulse =  ------------------------------------------------------
-     *                                  totalInverseMass
+     * To achieve that, we'll apply the following steps
      * 
-     *  We'll apply this equation in steps.
+     *  1. Calculate the seperating veloicty pre-collision
+     *  2. Calculate the seperating veloicty post-collision
+     *  3. Calculate the delta seperating velocity 
+     *  4. Calculate the total inverse mass
+     *  5. Calculate the magintude of the impulse:
+     *  6. Calculate the impulse with respect to the contact normal
+     *  7. Apply the impulse using the following formula: 
      *
+     * 
+     *  Note: Here we are using the seperating velocity instead of 
+     *     the closing velocity. It's a matter of preference only.
     */  
 
 
-    /**
-     * Get the seperating velocity before collision
-     * Here we are using the seperating velocity instead of 
-     * the closing velocity. They're same values, just flip their signs.
-    */
+    // Get the seperating velocity before collision
     double sepVel = CalcSepVel();
 
     /**
