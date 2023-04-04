@@ -45,7 +45,7 @@ namespace Gorgon
          * A force generator that applies gravity on the 
          * supplied particle 
          */
-        class GravityGenerator : public ParticleForceGenerator
+    class GravityGenerator : public ParticleForceGenerator
         {
             Point gravity;
         public: 

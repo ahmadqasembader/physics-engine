@@ -146,7 +146,7 @@ void ParticleContact::ResolveInterPenetration(unsigned long time)
     // If there's no penetration, exit;
     if (penetration <= 0) return;
 
-    // The movement of the objects are in propertion with their mass    
+    // The movement of the objects are in proportion with their mass    
     double totalInverseMass = particle[0].GetInverseMass();
     if(&particle[1]) 
         totalInverseMass += particle[1].GetInverseMass();
@@ -154,7 +154,7 @@ void ParticleContact::ResolveInterPenetration(unsigned long time)
     // If the objects that are colliding have infinite masses, we do nothing
     if(totalInverseMass <= 0) return;
 
-    // Find the amount of penetration per unit of inverse mass
+    // Find the distance along the contact normal
     Point movePerIMass = ContactNormal * (-penetration / totalInverseMass);
 
     // Apply the penetration

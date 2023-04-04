@@ -17,7 +17,7 @@ namespace Gorgon
 
         friend class ParticleContactResolver;
 
-
+        //weak pointers
         public:
             // Hold the two colliding/contacting particles
             // The second index can be NULL if the second object is a scenery or immovale object
@@ -43,8 +43,12 @@ namespace Gorgon
             // Calculates the impulse for this contact
             void ResolveVelocity(unsigned long time);
 
+            // Calculates the distance that every object has to be moved
+            // in inverse proportion to their masses
             void ResolveInterPenetration(unsigned long time);
         };
+
+
         class ParticleContactResolver
         {
         protected:

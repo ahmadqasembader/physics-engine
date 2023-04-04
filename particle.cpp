@@ -9,10 +9,11 @@
 using Gorgon::Geometry::Point;
 using Gorgon::Physics::Particle;
 
-void Particle::Integrator(unsigned long time)
+template <class O_>
+void Particle<O_>::Integrator(unsigned long time)
 {
     // don't integrate particles with zero mass
-    if (inverseMass <= 0.0f)
+    if ((O_*)(this)->inverseMass <= 0.0f)
         return;
 
     // abort the program if the time elapsed

@@ -22,7 +22,7 @@ namespace Gorgon
 {
     namespace Physics
     {
-        class Particle
+        class ParticleData
         {
         protected:
             double inverseMass;
@@ -38,7 +38,10 @@ namespace Gorgon
              * it's also cleared by each frame.
              */
             Point forceAccum;
+        };
 
+        template <class O_>
+        class Particle {
         public:
             /*
              * This function performs mathematical integration
@@ -72,5 +75,6 @@ namespace Gorgon
             inline void AddForce(const Point &force);
             inline bool HasFiniteMass() const;
         };  
+
     }
 }
