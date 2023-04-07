@@ -180,7 +180,7 @@ void ParticleContactResolver::ResolveContacts(ParticleContact *contactArr, unsig
 
     while (iterationsUsed < iterations)
     {
-        //Find the contact with the largest seperating velocity
+        //Find the contact with the largest closing velocity
         double max = std::numeric_limits<double>::max();
 
         unsigned maxIndex = numOfContacts;

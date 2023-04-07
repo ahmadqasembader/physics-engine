@@ -3,6 +3,7 @@
  * @brief Interface file for the contact resolution system for particles.
  *
  */
+#include <limits>
 
 #include <Gorgon/Physics/particle.h>
 #include <Gorgon/Geometry/Point.h>
