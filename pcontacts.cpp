@@ -21,11 +21,11 @@ double ParticleContact::CalcSepVel() const
      * We can calculate the seperating velocity using the
      * equation: Vs = (velocity_A - velocity_B) * contactNormal
      */
-    Point relativeVelocity = particle[0].GetVelocity();
+    Point relativeVelocity = particle[0]->GetVelocity();
 
     //check if there's another object
     if(&particle[1])
-        relativeVelocity -= particle[1].GetVelocity();
+        relativeVelocity -= particle[1]->GetVelocity();
 
     //return the seperating velocity along the contact normal
     return (relativeVelocity * ContactNormal);
@@ -73,9 +73,9 @@ void ParticleContact::ResolveVelocity(unsigned long time)
     double newSepVel = -sepVel * restitution;
 
             // Check the velocity build-up due to acceleration only.
-            Point accCausedVelocity = particle[0].GetAcceleration();
+            Point accCausedVelocity = particle[0]->GetAcceleration();
             if(&particle[1])
-                accCausedVelocity -= particle[1].GetAcceleration();
+                accCausedVelocity -= particle[1]->GetAcceleration();
 
             double accCausedSepVelocity = accCausedVelocity * ContactNormal * time;
 
@@ -104,9 +104,9 @@ void ParticleContact::ResolveVelocity(unsigned long time)
      * (less inverse mass = higher actual mass, which get less change in velocity)
      */
 
-    double totalInverseMass = particle[0].GetInverseMass();
+    double totalInverseMass = particle[0]->GetInverseMass();
     if(&particle[1])
-        totalInverseMass += particle[1].GetInverseMass();
+        totalInverseMass += particle[1]->GetInverseMass();
     
     // Impulse have no effects if the objects have infinite masses
     if(totalInverseMass <= 0) return;
@@ -131,13 +131,13 @@ void ParticleContact::ResolveVelocity(unsigned long time)
      *          NewVelocity = OldVelocity + InverseMass * TotalImpulses
      */
 
-    particle[0].SetVelocity(particle[0].GetVelocity() + impulsePerMass * particle[0].GetInverseMass());
+    particle[0]->SetVelocity(particle[0]->GetVelocity() + impulsePerMass * particle[0]->GetInverseMass());
 
     if(&particle[1])
     {
         // The 2nd particle goes into the opposite direction,
         // hence the nigative sign to the inverse mass
-        particle[1].SetVelocity(particle[1].GetVelocity() + impulsePerMass * -particle[1].GetInverseMass());
+        particle[1]->SetVelocity(particle[1]->GetVelocity() + impulsePerMass * -particle[1]->GetInverseMass());
     }
 }
 
@@ -147,9 +147,9 @@ void ParticleContact::ResolveInterPenetration(unsigned long time)
     if (penetration <= 0) return;
 
     // The movement of the objects are in propertion with their mass    
-    double totalInverseMass = particle[0].GetInverseMass();
+    double totalInverseMass = particle[0]->GetInverseMass();
     if(&particle[1]) 
-        totalInverseMass += particle[1].GetInverseMass();
+        totalInverseMass += particle[1]->GetInverseMass();
 
     // If the objects that are colliding have infinite masses, we do nothing
     if(totalInverseMass <= 0) return;
@@ -158,9 +158,9 @@ void ParticleContact::ResolveInterPenetration(unsigned long time)
     Point movePerIMass = ContactNormal * (-penetration / totalInverseMass);
 
     // Apply the penetration
-    particle[0].SetPosition(particle[0].GetPosition() + movePerIMass * particle[0].GetInverseMass());
+    particle[0]->SetPosition(particle[0]->GetPosition() + movePerIMass * particle[0]->GetInverseMass());
     if(&particle[1])
-        particle[1].SetPosition(particle[1].GetPosition() + movePerIMass * particle[1].GetInverseMass());
+        particle[1]->SetPosition(particle[1]->GetPosition() + movePerIMass * particle[1]->GetInverseMass());
 
 }
 

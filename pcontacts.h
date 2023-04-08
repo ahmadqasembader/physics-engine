@@ -22,7 +22,7 @@ namespace Gorgon
         public:
             // Hold the two colliding/contacting particles
             // The second index can be NULL if the second object is a scenery or immovale object
-            Particle particle[2];
+            Particle *particle[2];
 
             // Holds the normal restitution coefficient at the contact.
             double restitution;
