@@ -5,6 +5,7 @@
  * base class for cables and rods, and could be used as a base
  * class for springs with a limit to their extension.
  */
+#pragma once
 
 #include <Gorgon/Physics/particle.h>
 #include <Gorgon/Physics/pcontacts.h>
