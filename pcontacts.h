@@ -3,6 +3,8 @@
  * @brief Interface file for the contact resolution system for particles.
  *
  */
+#pragma once
+
 #include <limits>
 
 #include <Gorgon/Physics/particle.h>
