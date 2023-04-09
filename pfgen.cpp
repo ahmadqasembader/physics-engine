@@ -3,7 +3,7 @@
  * @author Ahmad Bader (ahmadqasem.b@gmail.com)
  */
 
-#include "pfgen.h"
+#include "./pfgen.h"
 
 using Gorgon::Geometry::Point;
 using Gorgon::Physics::Particle;
@@ -16,7 +16,7 @@ using Gorgon::Physics::BungeeGenerator;
 
 /********************************************************************
  * Particle Force Registry Class Implementation
-/********************************************************************/
+********************************************************************/
 
 void ParticleForceRegistry::Add(Particle * particle, ParticleForceGenerator *fg)
 {
@@ -40,8 +40,8 @@ void ParticleForceRegistry::UpdateForces(double time)
 
 
 /********************************************************************
- * Gravity Force Generator Class Implementation
-/********************************************************************/
+* Gravity Force Generator Class Implementation
+********************************************************************/
 
 GravityGenerator::GravityGenerator(const Point &gravity)
 : gravity(gravity)
@@ -60,7 +60,7 @@ void GravityGenerator::UpdateForce(Particle *particle, double time)
 
 /********************************************************************
  * Spring and Spring-Like Force Generators Class Implementation
-/********************************************************************/
+********************************************************************/
 
 SpringGenerator::SpringGenerator(Particle &other, double spring_constant, double rest_length)
     : other(other), spring_constant(spring_constant), rest_length(rest_length)
