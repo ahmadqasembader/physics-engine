@@ -18,8 +18,7 @@ namespace Gorgon
         class ParticleContact
         {
 
-        friend class ParticleContactResolver;
-
+            friend class ParticleContactResolver;
 
         public:
             // Hold the two colliding/contacting particles
@@ -70,6 +69,25 @@ namespace Gorgon
              * @param time time passed since the last integration (i.e. the last frame)
              */
             void ResolveContacts(ParticleContact *contactArr, unsigned numOfContacts, double time);
+        };
+        /**
+         * This is the basic interface for contact generators
+         * applying to particles.
+         */
+
+        class ParticleContactGenerator
+        {
+        public:
+            /**
+             * Fills the given contact structure with the generated
+             * contact. The contact pointer should point to the first
+             * available contact in a contact array, where limit is the
+             * maximum number of contacts in the array that can be written
+             * to. The method returns the number of contacts that have
+             * been written.
+             */
+            virtual unsigned addContact(ParticleContact *contact,
+                                        unsigned limit) const = 0;
         };
     };
 
