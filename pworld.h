@@ -16,22 +16,31 @@ namespace Gorgon
 {
     namespace Physics
     {
+        /**
+         * Particle World represents the whole physically simulated world.
+         * The World will be created at the beginning of the game and
+         * destroyed upon ending the game.
+         */
         class ParticleWorld
         {
+        public:
+            /// Where all particles in the world stored;
+            typedef std::vector<Particle*> Particles; 
+
+            /// Where all contact generators in the world stored;
+            typedef std::vector<ParticleContactGenerator*> ContactGenerators;
+
         protected:
-            /**
-             * Holds one particle in the linked list of all particles 
-             */
-            struct ParticleRegistration
-            {
-                Particle *particle;
-                ParticleRegistration *next;
-            };
 
             /**
-             * Holds a list of particle registration 
+             * Holds all particles 
              */
-            ParticleRegistration *firstParticle;
+            Particles particles;
+
+            /**
+             * Holds all contact generators
+            */
+            ContactGenerators contactGens;
         
             /**
              * Holds the force generators for the particle in this world 
@@ -42,21 +51,6 @@ namespace Gorgon
             * Holds the resolver for contacts.
             */
             ParticleContactResolver resolver;
-
-            /**
-             * Holds the registered contact generator 
-             */
-
-            struct ContactGenRegistration
-            {
-                ParticleContactGenerator *gen;
-                ContactGenRegistration *next;
-            };
-
-            /**
-             * Holds the list of contact generators 
-             */
-            ContactGenRegistration *firstContactGen;
 
             /**
              * Holds a list of contacts 
@@ -84,6 +78,11 @@ namespace Gorgon
             */
            ParticleWorld(unsigned maxContacts, unsigned iterations = 0);
 
+            /**
+             * Deletes the physically simulated world
+            */
+           ~ParticleWorld();
+
            /**
             * Initializes the world for a simulation frame. This clears
             * the force accumulators for particles in the world. After
@@ -106,6 +105,9 @@ namespace Gorgon
 
             /**
             * Processes all the physics for the particle world.
+            * This method it calls all force generator to 
+            * apply their forces and then perform the intergration,
+            * also runs the contact the detector and resolve contacts.
             */
             void RunPhysics(unsigned time);
         };

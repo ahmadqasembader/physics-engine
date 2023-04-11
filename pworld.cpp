@@ -2,17 +2,28 @@
 
 using Gorgon::Physics::ParticleWorld;
 
+ParticleWorld::ParticleWorld(unsigned maxContacts, unsigned iterations)
+: resolver(iterations), 
+maxContacts(maxContacts)
+{
+    contacts = new ParticleContact[maxContacts];
+    calculateIterations = (iterations == 0);
+}
+
+ParticleWorld::~ParticleWorld()
+{
+    delete[] contacts;
+}
+
 void ParticleWorld::StartFrame()
 {
-    ParticleRegistration *reg = firstParticle;
-
-    while(reg)
+    /// Loop over all particles in the world
+    for(Particles::iterator itr = particles.begin(); 
+        itr != particles.end();
+        itr++
+       )
     {
-        /// Remove all forces from the accumulator
-        reg->particle->ClearAccumulator();
-
-        /// Get the next registration
-        reg = reg->next;
+        (*itr)->ClearAccumulator();
     }
 }
 
@@ -21,17 +32,16 @@ unsigned ParticleWorld::GenerateContacts()
     unsigned limit = maxContacts;
     ParticleContact *nextContact = contacts;
 
-    ContactGenRegistration *reg = firstContactGen;
-    while(reg)
+    /// Loop over all contact generators
+    for(ContactGenerators::iterator itr = contactGens.begin();
+        itr != contactGens.end();
+        itr++)
     {
-        unsigned used = reg->gen->addContact(nextContact, limit);
+        unsigned used = (*itr)->AddContact(nextContact, limit);
         limit -= used;
         nextContact += used;
 
-        /// We’ve run out of contacts to fill. This means we’re missing contacts
         if(limit <= 0) break;
-
-        reg = reg->next;
     }
 
     /// Returns the number of contacts used
@@ -40,15 +50,11 @@ unsigned ParticleWorld::GenerateContacts()
 
 void ParticleWorld::Integrate(unsigned time)
 {
-    ParticleRegistration *reg = firstParticle;
-
-    while(reg)
+    for(Particles::iterator itr = particles.begin();
+        itr != particles.end();
+        itr++)
     {
-        /// Remove all forces from the force accumulator
-        reg->particle->ClearAccumulator();
-
-        /// Get the next registration
-        reg = reg->next;
+        (*itr)->Integrator(time);
     }
 }
 
