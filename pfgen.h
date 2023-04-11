@@ -120,13 +120,13 @@ namespace Gorgon
              * It keeps track with one force and its particle and the attached
              * force generator.
              */
-            struct ParticleRegistration
+            struct ParticleForceRegistration
             {
                 Gorgon::Physics::Particle *particle;
                 ParticleForceGenerator *fg;
             };
 
-            typedef std::vector<ParticleRegistration> Registry;
+            typedef std::vector<ParticleForceRegistration> Registry;
             Registry registrations;
 
         public:
