@@ -18,7 +18,7 @@ namespace Gorgon
         class ParticleContact
         {
 
-            friend class ParticleContactResolver;
+        friend class ParticleContactResolver;
 
         public:
             // Hold the two colliding/contacting particles
@@ -86,7 +86,7 @@ namespace Gorgon
              * to. The method returns the number of contacts that have
              * been written.
              */
-            virtual unsigned addContact(ParticleContact *contact,
+            virtual unsigned AddContact(ParticleContact *contact,
                                         unsigned limit) const = 0;
         };
     };
