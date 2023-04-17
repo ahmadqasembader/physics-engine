@@ -110,6 +110,36 @@ namespace Gorgon
             * also runs the contact the detector and resolve contacts.
             */
             void RunPhysics(unsigned time);
+
+            /**
+            * Returns the list of contact generators.
+            */
+            ContactGenerators& GetContactGenerators();
+
+            /**
+             *  Returns the list of particles.
+             */
+            Particles& GetParticles();
+
+            /**
+            * Returns the force registry.
+            */
+            ParticleForceRegistry& GetForceRegistry();
+        };
+
+
+        /**
+         * Ground contact generator that takes a vector of 
+         * particles and collides them against the ground
+         */
+        class GroundContacts : ParticleContactGenerator
+        {
+            ParticleWorld::Particles *particles;
+
+        public:
+            void init(ParticleWorld::Particles *particles);
+
+            virtual unsigned AddContact(ParticleContact *contact, unsigned limit) const;
         };
     }
 }

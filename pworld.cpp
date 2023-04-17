@@ -1,6 +1,8 @@
 #include <Gorgon/Physics/pworld.h>
 
 using Gorgon::Physics::ParticleWorld;
+using Gorgon::Physics::GroundContacts;
+using Gorgon::Physics::ParticleForceRegistry;
 
 ParticleWorld::ParticleWorld(unsigned maxContacts, unsigned iterations)
 : resolver(iterations), 
@@ -78,4 +80,52 @@ void ParticleWorld::RunPhysics(unsigned time)
         }
         resolver.ResolveContacts(contacts, usedContacts, time);
     }
+}
+
+ParticleWorld::Particles& ParticleWorld::GetParticles()
+{
+    return particles;
+}
+
+void GroundContacts::init(ParticleWorld::Particles *particles)
+{
+    GroundContacts::particles = particles;
+}
+
+unsigned GroundContacts::AddContact(ParticleContact *contact, unsigned limit) const
+{
+    unsigned count = 0;
+    for (ParticleWorld::Particles::iterator itr = particles->begin(); 
+    itr != particles->end();
+    itr++)
+    {
+        double y = (*itr)->GetPosition();
+        if(y < 0.0f)
+        {
+            //contact->ContactNormal = Point::UP;
+            contact->particle[0] = *itr;
+            contact->particle[1] = NULL;
+            contact->penetration = -y;
+            contact->restitution = 0.2f;
+            contact++;
+            count++;
+        }
+        
+        if(count >= limit) 
+        {
+            return count;
+        }
+    }
+
+    return count;
+}
+
+ParticleWorld::ContactGenerators& ParticleWorld::GetContactGenerators()
+{
+    return contactGens;
+}
+
+ParticleForceRegistry& ParticleWorld::GetForceRegistry()
+{
+    return registry;
 }
