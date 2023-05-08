@@ -2,7 +2,7 @@
  * @file particle.cpp contains the implementation for the Particle Class
  * @author Ahmad Bader (ahmadqasem.b@gmail.com)
  */
-#include "particle.h"
+#include <Gorgon/Physics/particle.h>
 #include <assert.h>
 #include <limits>
 

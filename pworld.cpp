@@ -99,7 +99,7 @@ unsigned GroundContacts::AddContact(ParticleContact *contact, unsigned limit) co
     itr != particles->end();
     itr++)
     {
-        double y = (*itr)->GetPosition();
+        double y = (*itr)->GetPosition().Y;
         if(y < 0.0f)
         {
             //contact->ContactNormal = Point::UP;

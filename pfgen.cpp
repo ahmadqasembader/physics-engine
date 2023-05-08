@@ -22,7 +22,7 @@ void ParticleForceRegistry::Add(Particle * particle, ParticleForceGenerator *fg)
 {
     // creates a new registry, and assign to it the particle and the fg
     // and then push back to the list of registrations
-    ParticleForceRegistry::ParticleRegistration registration;
+    ParticleForceRegistry::ParticleForceRegistration registration;
     registration.particle = particle;
     registration.fg = fg;
     registrations.push_back(registration);

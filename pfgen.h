@@ -25,6 +25,8 @@
 #include <Gorgon/Geometry/Point.h>
 #include <Gorgon/Geometry/Point3D.h>
 #include <vector>
+
+using Gorgon::Geometry::Point;
 namespace Gorgon
 {
     namespace Physics
