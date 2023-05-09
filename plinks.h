@@ -51,38 +51,36 @@ namespace Gorgon
             inline double CurrentLength() const;
         };
 
-
         /**
-         * Cables links a pair of particles and generates 
-         * a contact if they stray too far. 
+         * Cables links a pair of particles and generates
+         * a contact if they stray too far.
          */
 
         class CableLink : ParticleLinks
         {
         private:
-
             /**
              * Holds the maximum length of a cable
              */
             double maxLength;
 
             /**
-             * Holds the restitution for the cable 
+             * Holds the restitution for the cable
              */
             double restitution;
 
         public:
-           /**
-            * Fills the given contact structure with the contact needed
-            * to keep the cable from over-extending.
-            */
+            /**
+             * Fills the given contact structure with the contact needed
+             * to keep the cable from over-extending.
+             */
 
-           virtual unsigned AddContact(ParticleContact *contact, unsigned limit) const;
+            virtual unsigned AddContact(ParticleContact *contact, unsigned limit) const;
         };
 
         /**
-         * Rods links a pair of particles and generates 
-         * a contact if they stray too far. 
+         * Rods links a pair of particles and generates
+         * a contact if they stray too far.
          */
 
         class RodLink : ParticleLinks
@@ -95,10 +93,93 @@ namespace Gorgon
 
         public:
             /**
-            * Fills the given contact structure with the contact needed
-            * to keep the rod from extending or compressing.
-            */
+             * Fills the given contact structure with the contact needed
+             * to keep the rod from extending or compressing.
+             */
             virtual unsigned AddContact(ParticleContact *contact, unsigned limit) const;
         };
+
+        /**
+         * Constraints are just like links, except they connect a particle to
+         * an immovable anchor point.
+         *
+         * This class will act as interface for
+         * links' constraints (cable and rods constraints)
+         */
+        class Constraint : public ParticleContactGenerator
+        {
+        protected:
+            /**
+             * Returns the current length of the link
+             */
+            double CurrentLength() const;
+
+        public:
+            /**
+             * Holds the particle that are connected to the
+             * anchor point
+             */
+            Particle *particle
+
+                /**
+                 * Holds the anchor point dimisions
+                 */
+                Point *anchor
+
+                /**
+                 * Fills the given contact structure with the generated
+                 * contact. The contact pointer should point to the first
+                 * available contact in a contact array, where limit is the
+                 * maximum number of contacts in the array that can be written
+                 * to. The method returns the number of contacts that have
+                 * been written.
+                 */
+                virtual unsigned
+                AddContact(ParticleContact *contact,
+                           unsigned limit) const = 0;
+        }
+
+        /**
+         * Cables link a particle to an anchor point, generating a contact if they
+         * stray too far apart.
+         */
+
+        class CableConstraints : public Constraint
+        {
+        public:
+            /**
+             * Holds the maximum length of the cable.
+             */
+            double maxLength;
+
+            /**
+             * Holds the restitution (bounciness) of the cable.
+             */
+            double restitution;
+
+            /**
+             * Fills the given contact structure with the contact needed
+             * to keep the cable from over-extending.
+             */
+            virtual unsigned AddContact(ParticleContact *contact,
+                                        unsigned limit) const;
+        }
+
+        /**
+         * Rods link a particle to an anchor point, generating a contact if they
+         * stray too far apart or too close.
+         */
+        class RodConstraints : Constraint
+        {
+        public:
+            /**
+             * Holds the fixed length of the rod
+             */
+            double length;
+
+            virtual unsigned AddConntact(ParticleContact *contact,
+                                         unsigned limit) const;
+        }
     }
+
 }
