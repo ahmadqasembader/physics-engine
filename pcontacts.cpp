@@ -5,9 +5,7 @@
 
 #include "pcontacts.h"
 using Gorgon::Geometry::Point;
-using Gorgon::Physics::Particle;
-using Gorgon::Physics::ParticleContact;
-using Gorgon::Physics::ParticleContactResolver;
+using namespace Gorgon::Physics;
 
 void ParticleContact::Resolve(unsigned long time)
 {

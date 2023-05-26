@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include <particle.h>
+#include <Gorgon/Physics/particle.h>
 #include <Gorgon/Geometry/Point.h>
 #include <Gorgon/Geometry/Point3D.h>
 #include <vector>

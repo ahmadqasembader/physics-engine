@@ -47,92 +47,92 @@ void Particle::Integrator(unsigned long time)
     ClearAccumulator();
 };
 
-void Particle::SetMass(const double value)
-{
-    assert(value != 0);
-    inverseMass = (1.0f / value);
-};
+// void Particle::SetMass(const double value)
+// {
+//     assert(value != 0);
+//     inverseMass = (1.0f / value);
+// };
 
-double Particle::GetMass() const
-{
-    // if the inverse mass is zero, that means it has infinite mass
-    if (inverseMass == 0)
-    {
-        return std::numeric_limits<double>::max();
-    }
-    else
-    {
-        return (1.0f / inverseMass);
-    }
-};
+// double Particle::GetMass() const
+// {
+//     // if the inverse mass is zero, that means it has infinite mass
+//     if (inverseMass == 0)
+//     {
+//         return std::numeric_limits<double>::max();
+//     }
+//     else
+//     {
+//         return (1.0f / inverseMass);
+//     }
+// };
 
-void Particle::SetInverseMass(const double value)
-{
-    inverseMass = value;
-};
+// void Particle::SetInverseMass(const double value)
+// {
+//     inverseMass = value;
+// };
 
-double Particle::GetInverseMass() const
-{
-    return this->inverseMass;
-};
+// double Particle::GetInverseMass() const
+// {
+//     return this->inverseMass;
+// };
 
-void Particle::SetDamping(const double value)
-{
-    damping = value;
-};
+// void Particle::SetDamping(const double value)
+// {
+//     damping = value;
+// };
+// 
+// double Particle::GetDamping() const
+// {
+//     return this->damping;
+// };
 
-double Particle::GetDamping() const
-{
-    return this->damping;
-};
+// bool Particle::HasFiniteMass() const
+// {
+//     return (inverseMass >= 0.0f);
+// };
 
-bool Particle::HasFiniteMass() const
-{
-    return (inverseMass >= 0.0f);
-};
+// void Particle::SetPosition(const Point &value)
+// {
+//     this->position = value;
+// };
 
-void Particle::SetPosition(const Point &value)
-{
-    this->position = value;
-};
+// void Particle::SetPosition(const int &x, const int &y)
+// {
+//     this->position.X = x;
+//     this->position.Y = y;
+// }
 
-void Particle::SetPosition(const int &x, const int &y)
-{
-    this->position.X = x;
-    this->position.Y = y;
-}
-
-Point Particle::GetPosition() const
-{
-    return this->position;
-};
-
-void Particle::SetVelocity(const Point &value)
-{
-    this->velocity = value;
-};
-
-Point Particle::GetVelocity() const
-{
-    return this->velocity;
-};
-
-void Particle::SetAcceleration(const Point &value)
-{
-    acceleration = value;
-};
-
-Point Particle::GetAcceleration() const
-{
-    return this->acceleration;
-};
-
-void Particle::ClearAccumulator()
-{
-    forceAccum.X = forceAccum.Y = 0;
-};
-
-void Particle::AddForce(const Point &force)
-{
-    forceAccum += force;
-};
+// Point Particle::GetPosition() const
+// {
+//     return this->position;
+// };
+// 
+// void Particle::SetVelocity(const Point &value)
+// {
+//     this->velocity = value;
+// };
+// 
+// Point Particle::GetVelocity() const
+// {
+//     return this->velocity;
+// };
+// 
+// void Particle::SetAcceleration(const Point &value)
+// {
+//     acceleration = value;
+// };
+// 
+// Point Particle::GetAcceleration() const
+// {
+//     return this->acceleration;
+// };
+// 
+// void Particle::ClearAccumulator()
+// {
+//     forceAccum.X = forceAccum.Y = 0;
+// };
+// 
+// void Particle::AddForce(const Point &force)
+// {
+//     forceAccum += force;
+// };

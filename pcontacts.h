@@ -23,6 +23,7 @@ namespace Gorgon
         public:
             // Hold the two colliding/contacting particles
             // The second index can be NULL if the second object is a scenery or immovale object
+            // std::array
             Particle *particle[2];
 
             // Holds the normal restitution coefficient at the contact.
@@ -86,8 +87,7 @@ namespace Gorgon
              * to. The method returns the number of contacts that have
              * been written.
              */
-            virtual unsigned AddContact(ParticleContact *contact,
-                                        unsigned limit) const = 0;
+            virtual unsigned AddContact(ParticleContact *contact, unsigned limit) const = 0;
         };
     };
 

@@ -19,7 +19,7 @@ namespace Gorgon
         /**
          * Links interface
          */
-        class ParticleLinks
+        class ParticleLinks : public ParticleContactGenerator
         {
         public:
             /**
@@ -43,7 +43,7 @@ namespace Gorgon
              */
 
             virtual unsigned AddContact(ParticleContact *contact, unsigned limit) const = 0;
-
+        
         protected:
             /**
              *  Returns the current length of the link
@@ -56,9 +56,9 @@ namespace Gorgon
          * a contact if they stray too far.
          */
 
-        class CableLink : ParticleLinks
+        class CableLink : public ParticleLinks
         {
-        private:
+        public:
             /**
              * Holds the maximum length of a cable
              */
@@ -83,9 +83,9 @@ namespace Gorgon
          * a contact if they stray too far.
          */
 
-        class RodLink : ParticleLinks
+        class RodLink : public ParticleLinks
         {
-        private:
+        public:
             /**
              * Holds the length of the rod
              */
@@ -119,25 +119,23 @@ namespace Gorgon
              * Holds the particle that are connected to the
              * anchor point
              */
-            Particle *particle
+            Particle *particle;
 
-                /**
-                 * Holds the anchor point dimisions
-                 */
-                Point *anchor
+            /**
+                * Holds the anchor point dimisions
+            */
+            Point anchor;
 
-                /**
-                 * Fills the given contact structure with the generated
-                 * contact. The contact pointer should point to the first
-                 * available contact in a contact array, where limit is the
-                 * maximum number of contacts in the array that can be written
-                 * to. The method returns the number of contacts that have
-                 * been written.
-                 */
-                virtual unsigned
-                AddContact(ParticleContact *contact,
-                           unsigned limit) const = 0;
-        }
+            /**
+                * Fills the given contact structure with the generated
+                * contact. The contact pointer should point to the first
+                * available contact in a contact array, where limit is the
+                * maximum number of contacts in the array that can be written
+                * to. The method returns the number of contacts that have
+                * been written.
+                */
+            virtual unsigned AddContact(ParticleContact *contact, unsigned limit) const = 0;
+        };
 
         /**
          * Cables link a particle to an anchor point, generating a contact if they
@@ -163,13 +161,13 @@ namespace Gorgon
              */
             virtual unsigned AddContact(ParticleContact *contact,
                                         unsigned limit) const;
-        }
+        };
 
         /**
          * Rods link a particle to an anchor point, generating a contact if they
          * stray too far apart or too close.
          */
-        class RodConstraints : Constraint
+        class RodConstraints : public Constraint
         {
         public:
             /**
@@ -177,9 +175,9 @@ namespace Gorgon
              */
             double length;
 
-            virtual unsigned AddConntact(ParticleContact *contact,
+            virtual unsigned AddContact(ParticleContact *contact,
                                          unsigned limit) const;
-        }
-    }
+        };
+    };
 
 }

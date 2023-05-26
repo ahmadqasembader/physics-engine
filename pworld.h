@@ -7,10 +7,14 @@
 
 #pragma once
 
-#include <Gorgon/Physics/particle.h>
-#include <Gorgon/Physics/pcontacts.h>
-#include <Gorgon/Physics/pfgen.h>
+
+#include "particle.h"
+#include "pcontacts.h"
+#include "pfgen.h"
+
 #include <Gorgon/Geometry/Point.h>
+
+#include <Gorgon/Containers/Collection.h>
 
 namespace Gorgon
 {
@@ -21,27 +25,29 @@ namespace Gorgon
          * The World will be created at the beginning of the game and
          * destroyed upon ending the game.
          */
+        
+        /// inherit  from animation
         class ParticleWorld
         {
         public:
+            /// *** Colliction 
             /// Where all particles in the world stored;
-            typedef std::vector<Particle*> Particles; 
-
+//             typedef std::vector<Particle*> Particles; 
+            
             /// Where all contact generators in the world stored;
-            typedef std::vector<ParticleContactGenerator*> ContactGenerators;
-
+//             typedef std::vector<ParticleContactGenerator*> ContactGenerators;
         protected:
 
             /**
              * Holds all particles 
              */
-            Particles particles;
+            Gorgon::Containers::Collection<Particle> particles;
 
             /**
              * Holds all contact generators
             */
-            ContactGenerators contactGens;
-        
+            Gorgon::Containers::Collection<ParticleContactGenerator> contactGens;
+
             /**
              * Holds the force generators for the particle in this world 
              */
@@ -114,12 +120,14 @@ namespace Gorgon
             /**
             * Returns the list of contact generators.
             */
-            ContactGenerators& GetContactGenerators();
+            inline Gorgon::Containers::Collection<ParticleContactGenerator>& GetContactGens(){
+                return contactGens;
+            };
 
             /**
              *  Returns the list of particles.
              */
-            Particles& GetParticles();
+            Gorgon::Containers::Collection<Particle>& GetParticles();
 
             /**
             * Returns the force registry.
@@ -132,12 +140,14 @@ namespace Gorgon
          * Ground contact generator that takes a vector of 
          * particles and collides them against the ground
          */
-        class GroundContacts : ParticleContactGenerator
+        class GroundContacts : public ParticleContactGenerator
         {
-            ParticleWorld::Particles *particles;
+        protected:
+            Gorgon::Containers::Collection<Particle> particles;
+//             ParticleWorld::Particles *particles;
 
         public:
-            void init(ParticleWorld::Particles *particles);
+            void init(Containers::Collection<Particle> &particle);
 
             virtual unsigned AddContact(ParticleContact *contact, unsigned limit) const;
         };

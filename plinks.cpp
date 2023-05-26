@@ -1,15 +1,7 @@
 #include "plinks.h"
 
 using Gorgon::Geometry::Point;
-using Gorgon::Physics::RodLink;
-using Gorgon::Physics::Particle;
-using Gorgon::Physics::CableLink;
-using Gorgon::Physics::Constraint;
-using Gorgon::Physics::ParticleLinks;
-using Gorgon::Physics::ParticleContact;
-
-using Gorgon::Physics::RodConstraints;
-using Gorgon::Physics::CableConstraints;
+using namespace Gorgon::Physics;
 
 double ParticleLinks::CurrentLength() const
 {
@@ -77,6 +69,7 @@ double Constraint::CurrentLength() const
     return relativePos.Distance();
 };
 
+
 unsigned CableConstraints::AddContact(ParticleContact *contact,
                 unsigned limit) const
 {
@@ -88,7 +81,7 @@ unsigned CableConstraints::AddContact(ParticleContact *contact,
 
     /// Otherwise return the contact
     contact->particle[0] = particle;
-    contact->particke[1] = 0;
+    contact->particle[1] = 0;
 
     /// Calculate the contact normal (collision direction)
     Point normal = anchor - particle->GetPosition(); 
@@ -96,10 +89,12 @@ unsigned CableConstraints::AddContact(ParticleContact *contact,
     contact->ContactNormal = normal;
 
     contact->restitution = restitution;
+    
+    return 1;
 }
 
 
-unsigned RodConstraints::addContact(ParticleContact *contact,
+unsigned RodConstraints::AddContact(ParticleContact *contact,
                                  unsigned limit) const
 {
     // Find the length of the rod
@@ -113,14 +108,14 @@ unsigned RodConstraints::addContact(ParticleContact *contact,
     contact->particle[1] = 0;
 
     // Calculate the normal
-    Point normal = anchor - particle->getPosition();
-    normal.Normalise();
+    Point normal = anchor - particle->GetPosition();
+    normal.Normalize();
 
     // The contact normal depends on whether we're extending or compressing
     if (currentLen > length) {
         contact->ContactNormal = normal;
     } else {
-        contact->contactNormal = normal * -1;
+        contact->ContactNormal = normal * -1;
     }
 
     // Always use zero restitution (no bounciness)

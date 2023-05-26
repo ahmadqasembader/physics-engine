@@ -17,7 +17,7 @@
 
 #include <Gorgon/Geometry/Point.h>
 #include <Gorgon/Geometry/Point3D.h>
-
+#include <assert.h>
 using Gorgon::Geometry::Point;
 namespace Gorgon
 {
@@ -50,28 +50,67 @@ namespace Gorgon
              */
             void Integrator(unsigned long time);
 
-            inline void SetMass(const double mass);
-            inline double GetMass() const;
+            inline void SetMass(const double value){
+                assert(value != 0);
+                inverseMass = (1.0f / value);
+            };
+            inline double GetMass() const{
+                // if the inverse mass is zero, that means it has infinite mass
+                if (inverseMass == 0){
+                    return std::numeric_limits<double>::max();
+                } else{
+                    return (1.0f / inverseMass);
+                }
+            };
 
-            inline void SetInverseMass(const double inverseMass);
-            inline double GetInverseMass() const;
+            inline void SetInverseMass(const double value){
+                inverseMass = value;
+            };
+            inline double GetInverseMass() const{
+                return this->inverseMass;
+            };
 
-            inline void SetDamping(const double damping);
-            inline double GetDamping() const;
+            inline void SetDamping(const double value){
+                damping = value;
+            };
+            inline double GetDamping() const{
+                return this->damping;
+            };
 
-            inline void SetPosition(const Point &position);
-            inline void SetPosition(const int &x, const int &y);
-            inline Point GetPosition() const;
+            inline void SetPosition(const Point &value){
+                position = value;
+            };
+            inline void SetPosition(const int &x, const int &y){
+                this->position.X = x;
+                this->position.Y = y;
+            }
+            inline Point GetPosition() const{
+                return this->position;
+            };
 
-            inline void SetVelocity(const Point &velocity);
-            inline Point GetVelocity() const;
+            inline void SetVelocity(const Point &value){
+                velocity = value;
+            };
+            inline Point GetVelocity() const{
+                return this->velocity;
+            };
 
-            inline void SetAcceleration(const Point &acceleration);
-            inline Point GetAcceleration() const;
+            inline void SetAcceleration(const Point &value){
+                acceleration = value;
+            };
+            inline Point GetAcceleration() const{
+                return this->acceleration;
+            };
 
-            inline void ClearAccumulator();
-            inline void AddForce(const Point &force);
-            inline bool HasFiniteMass() const;
+            inline void ClearAccumulator(){
+                forceAccum.X = forceAccum.Y = 0;
+            };
+            inline void AddForce(const Point &force){
+                forceAccum += force;
+            };
+            inline bool HasFiniteMass() const{
+                return (inverseMass >= 0.0f);
+            };
         };  
     }
 }

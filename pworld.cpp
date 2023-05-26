@@ -1,9 +1,7 @@
-#include <Gorgon/Physics/pworld.h>
+#include "pworld.h"
 
-using Gorgon::Physics::ParticleWorld;
-using Gorgon::Physics::GroundContacts;
-using Gorgon::Physics::ParticleForceRegistry;
-
+using namespace Gorgon::Physics;
+using namespace Gorgon::Containers;
 ParticleWorld::ParticleWorld(unsigned maxContacts, unsigned iterations)
 : resolver(iterations), 
 maxContacts(maxContacts)
@@ -19,32 +17,45 @@ ParticleWorld::~ParticleWorld()
 
 void ParticleWorld::StartFrame()
 {
-    /// Loop over all particles in the world
-    for(Particles::iterator itr = particles.begin(); 
-        itr != particles.end();
-        itr++
-       )
-    {
-        (*itr)->ClearAccumulator();
+    
+    for(Particle &p : particles){
+        p.ClearAccumulator();
     }
+    
+    /// Loop over all particles in the world
+//     for(Particles::iterator itr = particles.begin(); 
+//         itr != particles.end();
+//         itr++
+//        )
+//     {
+//         (*itr)->ClearAccumulator();
+//     }
 }
 
 unsigned ParticleWorld::GenerateContacts()
 {
     unsigned limit = maxContacts;
     ParticleContact *nextContact = contacts;
-
-    /// Loop over all contact generators
-    for(ContactGenerators::iterator itr = contactGens.begin();
-        itr != contactGens.end();
-        itr++)
-    {
-        unsigned used = (*itr)->AddContact(nextContact, limit);
+    
+    for(ParticleContactGenerator &gen : contactGens){
+        unsigned used = gen.AddContact(nextContact, limit);
         limit -= used;
         nextContact += used;
-
-        if(limit <= 0) break;
+        if (limit<=0) break;
     }
+        
+    
+    /// Loop over all contact generators
+//     for(ContactGenerators::iterator itr = contactGens.begin();
+//         itr != contactGens.end();
+//         itr++)
+//     {
+//         unsigned used = (*itr)->AddContact(nextContact, limit);
+//         limit -= used;
+//         nextContact += used;
+// 
+//         if(limit <= 0) break;
+//     }
 
     /// Returns the number of contacts used
     return maxContacts - limit;
@@ -52,12 +63,17 @@ unsigned ParticleWorld::GenerateContacts()
 
 void ParticleWorld::Integrate(unsigned time)
 {
-    for(Particles::iterator itr = particles.begin();
+    
+    for(Particle &p : particles){
+        p.Integrator(time);
+    }
+    
+    /*for(Particles::iterator itr = particles.begin();
         itr != particles.end();
         itr++)
     {
         (*itr)->Integrator(time);
-    }
+    }*/
 }
 
 void ParticleWorld::RunPhysics(unsigned time)
@@ -82,50 +98,70 @@ void ParticleWorld::RunPhysics(unsigned time)
     }
 }
 
-ParticleWorld::Particles& ParticleWorld::GetParticles()
-{
+// Collection<ParticleContactGenerator>& ParticleWorld::GetContactGens(){
+//     return contactGens;
+// }
+
+Collection<Particle> &ParticleWorld::GetParticles(){
     return particles;
 }
 
-void GroundContacts::init(ParticleWorld::Particles *particles)
+// ParticleWorld::Particles& ParticleWorld::GetParticles()
+// {
+//     return particles;
+// }
+
+void GroundContacts::init(Containers::Collection<Particle> &particle)
 {
-    GroundContacts::particles = particles;
+//     GroundContacts::particles = particle;
 }
 
 unsigned GroundContacts::AddContact(ParticleContact *contact, unsigned limit) const
 {
     unsigned count = 0;
-    for (ParticleWorld::Particles::iterator itr = particles->begin(); 
-    itr != particles->end();
-    itr++)
-    {
-        double y = (*itr)->GetPosition().Y;
-        if(y < 0.0f)
-        {
+    for(Particle &p : particles){
+        double y = p.GetPosition().Y;
+        if(y<0.0f){
             //contact->ContactNormal = Point::UP;
-            contact->particle[0] = *itr;
+            contact->particle[0] = &p;
             contact->particle[1] = NULL;
             contact->penetration = -y;
             contact->restitution = 0.2f;
             contact++;
             count++;
         }
-        
         if(count >= limit) 
         {
             return count;
         }
     }
+//     for (ParticleWorld::Particles::iterator itr = particles->begin(); 
+//     itr != particles->end();
+//     itr++)
+//     {
+//         double y = (*itr)->GetPosition().Y;
+//         if(y < 0.0f)
+//         {
+//             //contact->ContactNormal = Point::UP;
+//             contact->particle[0] = *itr;
+//             contact->particle[1] = NULL;
+//             contact->penetration = -y;
+//             contact->restitution = 0.2f;
+//             contact++;
+//             count++;
+//         }
+//         
+//         if(count >= limit) 
+//         {
+//             return count;
+//         }
+//     }
 
     return count;
 }
 
-ParticleWorld::ContactGenerators& ParticleWorld::GetContactGenerators()
-{
-    return contactGens;
-}
 
-ParticleForceRegistry& ParticleWorld::GetForceRegistry()
-{
+
+ParticleForceRegistry& ParticleWorld::GetForceRegistry(){
     return registry;
 }
