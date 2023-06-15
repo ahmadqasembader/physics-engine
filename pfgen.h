@@ -22,11 +22,10 @@
 #pragma once
 
 #include <Gorgon/Physics/particle.h>
-#include <Gorgon/Geometry/Point.h>
 #include <Gorgon/Geometry/Point3D.h>
 #include <vector>
 
-using Gorgon::Geometry::Point;
+using Gorgon::Geometry::Point3D;
 namespace Gorgon
 {
     namespace Physics
@@ -49,10 +48,10 @@ namespace Gorgon
          */
         class GravityGenerator : public ParticleForceGenerator
         {
-            Point gravity;
+            Point3D gravity;
         public: 
             // It creates a gravity generator with the given gravity
-            GravityGenerator(const Point &gravity);
+            GravityGenerator(const Point3D &gravity);
 
             virtual void UpdateForce(Particle *particle, double time);
         };
@@ -74,7 +73,7 @@ namespace Gorgon
 
         class SpringAnchorGenerator : public ParticleForceGenerator
         {
-            Point anchor;
+            Point3D anchor;
 
             double spring_constant;
 
@@ -83,11 +82,11 @@ namespace Gorgon
         public: 
             SpringAnchorGenerator();
 
-            SpringAnchorGenerator(Point &anchor, double spring_constant, double rest_length);
+            SpringAnchorGenerator(Point3D &anchor, double spring_constant, double rest_length);
 
-            const Point GetAnchor() const {return anchor;}
+            const Point3D GetAnchor() const {return anchor;}
 
-            void init(Point &anchor, double spring_constant, double rest_length);
+            void init(Point3D &anchor, double spring_constant, double rest_length);
 
             virtual void UpdateForce(Particle *Particle, double time);
         };

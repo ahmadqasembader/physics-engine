@@ -5,7 +5,7 @@
 
 #include "./pfgen.h"
 
-using Gorgon::Geometry::Point;
+using Gorgon::Geometry::Point3D;
 using Gorgon::Physics::Particle;
 using Gorgon::Physics::ParticleForceGenerator;
 using Gorgon::Physics::ParticleForceRegistry;
@@ -43,7 +43,7 @@ void ParticleForceRegistry::UpdateForces(double time)
 * Gravity Force Generator Class Implementation
 ********************************************************************/
 
-GravityGenerator::GravityGenerator(const Point &gravity)
+GravityGenerator::GravityGenerator(const Point3D &gravity)
 : gravity(gravity)
 {
 }
@@ -71,9 +71,9 @@ void SpringGenerator::UpdateForce(Particle *particle, double time)
 {
 
     //calculating the vector of the spring
-    Point force;
+    Point3D force;
     force = particle->GetPosition();
-    force -= other.GetPosition();
+    force = force - other.GetPosition();
 
     //calculating the magnitude of the force
     double magnitude = force.Distance(); 
@@ -82,7 +82,7 @@ void SpringGenerator::UpdateForce(Particle *particle, double time)
 
     //calculate the final force and then apply it
     force.Normalize();
-    force *= -magnitude;
+    force = force * (-magnitude);
     particle->AddForce(force);
 }
 
@@ -91,7 +91,7 @@ SpringAnchorGenerator::SpringAnchorGenerator()
 
 };
 
-SpringAnchorGenerator::SpringAnchorGenerator(Point &other, double sc, double rl)
+SpringAnchorGenerator::SpringAnchorGenerator(Point3D &other, double sc, double rl)
     : anchor(other), spring_constant(sc), rest_length(rl)
 { };
 
@@ -99,9 +99,9 @@ void SpringAnchorGenerator::UpdateForce(Particle *particle, double time)
 {
 
     //calculating the vector of the spring
-    Point force;
+    Point3D force;
     force = particle->GetPosition();
-    force -= anchor;
+    force = force - anchor;
 
     //calculating the magnitude of the spring
     double magintude = force.Distance();
@@ -109,7 +109,7 @@ void SpringAnchorGenerator::UpdateForce(Particle *particle, double time)
 
     //calculating the final force and then apply it
     force.Normalize();
-    force *= magintude;
+    force = force * magintude;
     particle->AddForce(force);
 }
 
@@ -121,9 +121,9 @@ BungeeGenerator::BungeeGenerator(Particle &other, double sc, double rl)
 void BungeeGenerator::UpdateForce(Particle *particle, double time)
 {
     //calculating the vector of the spring
-    Point force;
+    Point3D force;
     force = particle->GetPosition();
-    force -= other.GetPosition();
+    force = force - other.GetPosition();
 
     //check if the bungee is compressed
     double magintude = force.Distance();
@@ -134,6 +134,6 @@ void BungeeGenerator::UpdateForce(Particle *particle, double time)
 
     //calculate the final force and then apply it
     force.Normalize();
-    force *= -magintude;
+    force = force * (-magintude);
     particle->AddForce(force);
 }

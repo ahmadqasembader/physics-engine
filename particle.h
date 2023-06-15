@@ -15,10 +15,9 @@
  */
 #pragma once
 
-#include <Gorgon/Geometry/Point.h>
 #include <Gorgon/Geometry/Point3D.h>
 #include <assert.h>
-using Gorgon::Geometry::Point;
+using Gorgon::Geometry::Point3D;
 namespace Gorgon
 {
     namespace Physics
@@ -29,16 +28,16 @@ namespace Gorgon
             double inverseMass;
             double damping;
 
-            Point position;
-            Point velocity;
-            Point acceleration;
+            Point3D position;
+            Point3D velocity;
+            Point3D acceleration;
 
             /**
              * this variable holds the accumulated force that to
              * be applied in the next frame update.
              * it's also cleared by each frame.
              */
-            Point forceAccum;
+            Point3D forceAccum;
 
         public:
             /*
@@ -67,46 +66,46 @@ namespace Gorgon
                 inverseMass = value;
             };
             inline double GetInverseMass() const{
-                return this->inverseMass;
+                return inverseMass;
             };
 
             inline void SetDamping(const double value){
                 damping = value;
             };
             inline double GetDamping() const{
-                return this->damping;
+                return damping;
             };
 
-            inline void SetPosition(const Point &value){
+            inline void SetPosition(const Point3D &value){
                 position = value;
             };
             inline void SetPosition(const int &x, const int &y){
-                this->position.X = x;
-                this->position.Y = y;
+                position.X = x;
+                position.Y = y;
             }
-            inline Point GetPosition() const{
-                return this->position;
+            inline Point3D GetPosition() const{
+                return position;
             };
 
-            inline void SetVelocity(const Point &value){
+            inline void SetVelocity(const Point3D &value){
                 velocity = value;
             };
-            inline Point GetVelocity() const{
-                return this->velocity;
+            inline Point3D GetVelocity() const{
+                return velocity;
             };
 
-            inline void SetAcceleration(const Point &value){
+            inline void SetAcceleration(const Point3D &value){
                 acceleration = value;
             };
-            inline Point GetAcceleration() const{
-                return this->acceleration;
+            inline Point3D GetAcceleration() const{
+                return acceleration;
             };
 
             inline void ClearAccumulator(){
-                forceAccum.X = forceAccum.Y = 0;
+                forceAccum = {0, 0, 0};
             };
-            inline void AddForce(const Point &force){
-                forceAccum += force;
+            inline void AddForce(const Point3D &force){
+                forceAccum = forceAccum + force ;
             };
             inline bool HasFiniteMass() const{
                 return (inverseMass >= 0.0f);

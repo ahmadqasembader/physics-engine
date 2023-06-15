@@ -1,11 +1,11 @@
 #include "plinks.h"
 
-using Gorgon::Geometry::Point;
+using Gorgon::Geometry::Point3D;
 using namespace Gorgon::Physics;
 
 double ParticleLinks::CurrentLength() const
 {
-    Point relativePos = particle[0]->GetPosition() 
+    Point3D relativePos = particle[0]->GetPosition() 
                             -  particle[1]->GetPosition();
 
     return relativePos.Distance();
@@ -23,7 +23,7 @@ unsigned CableLink::AddContact(ParticleContact *contact, unsigned limit) const
     contact->particle[1] = particle[1];
 
     /// calculate the contact normal
-    Point normal = particle[1]->GetPosition() - particle[0]->GetPosition();
+    Point3D normal = particle[1]->GetPosition() - particle[0]->GetPosition();
     normal.Normalize();
     contact->ContactNormal = normal;
 
@@ -45,7 +45,7 @@ unsigned RodLink::AddContact(ParticleContact *contact, unsigned limit) const
     contact->particle[1] = particle[1];
 
     /// Calculate the contact normal
-    Point normal = particle[1]->GetPosition() - particle[0]->GetPosition();
+    Point3D normal = particle[1]->GetPosition() - particle[0]->GetPosition();
     normal.Normalize();
 
     /// The contact normal depends on whether we're extending or compressing
@@ -65,7 +65,7 @@ unsigned RodLink::AddContact(ParticleContact *contact, unsigned limit) const
 
 double Constraint::CurrentLength() const
 {
-    Point relativePos = particle->GetPosition() - anchor;
+    Point3D relativePos = particle->GetPosition() - anchor;
     return relativePos.Distance();
 };
 
@@ -84,7 +84,7 @@ unsigned CableConstraints::AddContact(ParticleContact *contact,
     contact->particle[1] = 0;
 
     /// Calculate the contact normal (collision direction)
-    Point normal = anchor - particle->GetPosition(); 
+    Point3D normal = anchor - particle->GetPosition(); 
     normal.Normalize();
     contact->ContactNormal = normal;
 
@@ -108,7 +108,7 @@ unsigned RodConstraints::AddContact(ParticleContact *contact,
     contact->particle[1] = 0;
 
     // Calculate the normal
-    Point normal = anchor - particle->GetPosition();
+    Point3D normal = anchor - particle->GetPosition();
     normal.Normalize();
 
     // The contact normal depends on whether we're extending or compressing

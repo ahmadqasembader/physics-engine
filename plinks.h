@@ -9,7 +9,7 @@
 
 #include <Gorgon/Physics/particle.h>
 #include <Gorgon/Physics/pcontacts.h>
-#include <Gorgon/Geometry/Point.h>
+#include <Gorgon/Geometry/Point3D.h>
 
 namespace Gorgon
 {
@@ -124,7 +124,7 @@ namespace Gorgon
             /**
                 * Holds the anchor point dimisions
             */
-            Point anchor;
+            Point3D anchor;
 
             /**
                 * Fills the given contact structure with the generated

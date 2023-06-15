@@ -119,10 +119,11 @@ void GroundContacts::init(Containers::Collection<Particle> &particle)
 unsigned GroundContacts::AddContact(ParticleContact *contact, unsigned limit) const
 {
     unsigned count = 0;
+    Point3D UP(0, 1, 0);
     for(Particle &p : particles){
         double y = p.GetPosition().Y;
         if(y<0.0f){
-            //contact->ContactNormal = Point::UP;
+            contact->ContactNormal = UP;
             contact->particle[0] = &p;
             contact->particle[1] = NULL;
             contact->penetration = -y;
@@ -142,7 +143,7 @@ unsigned GroundContacts::AddContact(ParticleContact *contact, unsigned limit) co
 //         double y = (*itr)->GetPosition().Y;
 //         if(y < 0.0f)
 //         {
-//             //contact->ContactNormal = Point::UP;
+//             //contact->ContactNormal = Point3D::UP;
 //             contact->particle[0] = *itr;
 //             contact->particle[1] = NULL;
 //             contact->penetration = -y;

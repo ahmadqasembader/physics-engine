@@ -8,11 +8,8 @@
 #include <limits>
 
 #include <Gorgon/Physics/particle.h>
-#include <Gorgon/Geometry/Point.h>
 #include <Gorgon/Geometry/Point3D.h>
-
-namespace Gorgon
-{
+namespace Gorgon {
     namespace Physics
     {
         class ParticleContact
@@ -30,7 +27,7 @@ namespace Gorgon
             double restitution;
 
             // Holds the direction of the contact
-            Gorgon::Geometry::Point ContactNormal;
+            Gorgon::Geometry::Point3D ContactNormal;
 
             // Holds the depth of the penetration
             double penetration;
@@ -61,7 +58,9 @@ namespace Gorgon
             // Creates a new contact resolver
             ParticleContactResolver(unsigned iterations);
 
-            inline void SetIterations(unsigned iterations);
+            inline void SetIterations(unsigned iterations){
+                this->iterations = iterations;
+            }
 
             /**
              *

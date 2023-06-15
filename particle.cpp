@@ -3,10 +3,11 @@
  * @author Ahmad Bader (ahmadqasem.b@gmail.com)
  */
 #include <Gorgon/Physics/particle.h>
-#include <assert.h>
+#include <Gorgon/Utils/Assert.h>
+// #include <assert.h>
 #include <limits>
 
-using Gorgon::Geometry::Point;
+using Gorgon::Geometry::Point3D;
 using Gorgon::Physics::Particle;
 
 void Particle::Integrator(unsigned long time)
@@ -17,7 +18,8 @@ void Particle::Integrator(unsigned long time)
 
     // abort the program if the time elapsed
     // between frames is less than zero
-    assert(time > 0);
+    if(time < 0.0)
+        throw std::runtime_error("time cannot be less than zero");
 
     /**
      * Update linear position
@@ -28,20 +30,20 @@ void Particle::Integrator(unsigned long time)
      */
 
     /// TODO create a function to add a scaled vector directly, ex addScaledVector(vecotr, scale)
-    position += velocity * time;
+    position = position + (velocity * time);
 
     // work out the acceleratino from the applied force
-    Point resultingAcceleration = acceleration;
+    Point3D resultingAcceleration = acceleration;
 
     // add to the resulting acceleration force scaled with the inverse mass
-    resultingAcceleration += forceAccum * inverseMass;
+    resultingAcceleration = resultingAcceleration + (forceAccum * inverseMass);
 
     // update the velcity
-    velocity += resultingAcceleration * time;
+    velocity = velocity + (resultingAcceleration * time);
 
     // impose damping (drag)
     // impose drag by each frame instead of per intervals of time.
-    velocity *= pow(damping, time);
+    velocity = velocity * pow(damping, time);
 
     // clear the accumulated forces
     ClearAccumulator();
@@ -91,7 +93,7 @@ void Particle::Integrator(unsigned long time)
 //     return (inverseMass >= 0.0f);
 // };
 
-// void Particle::SetPosition(const Point &value)
+// void Particle::SetPosition(const Point3D &value)
 // {
 //     this->position = value;
 // };
@@ -102,27 +104,27 @@ void Particle::Integrator(unsigned long time)
 //     this->position.Y = y;
 // }
 
-// Point Particle::GetPosition() const
+// Point3D Particle::GetPosition() const
 // {
 //     return this->position;
 // };
 // 
-// void Particle::SetVelocity(const Point &value)
+// void Particle::SetVelocity(const Point3D &value)
 // {
 //     this->velocity = value;
 // };
 // 
-// Point Particle::GetVelocity() const
+// Point3D Particle::GetVelocity() const
 // {
 //     return this->velocity;
 // };
 // 
-// void Particle::SetAcceleration(const Point &value)
+// void Particle::SetAcceleration(const Point3D &value)
 // {
 //     acceleration = value;
 // };
 // 
-// Point Particle::GetAcceleration() const
+// Point3D Particle::GetAcceleration() const
 // {
 //     return this->acceleration;
 // };
@@ -132,7 +134,7 @@ void Particle::Integrator(unsigned long time)
 //     forceAccum.X = forceAccum.Y = 0;
 // };
 // 
-// void Particle::AddForce(const Point &force)
+// void Particle::AddForce(const Point3D &force)
 // {
 //     forceAccum += force;
 // };
